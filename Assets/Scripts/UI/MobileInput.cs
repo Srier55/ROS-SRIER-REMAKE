@@ -19,33 +19,12 @@ public class MobileInput : MonoBehaviour
         MoveInput = Vector2.zero;
     }
 
-    public void FireDown()
-    {
-        FirePressed = true;
-    }
+    public void FireDown() { FirePressed = true; }
+    public void FireUp() { FirePressed = false; }
 
-    public void FireUp()
-    {
-        FirePressed = false;
-    }
+    public void AimDown() { AimPressed = true; }
+    public void AimUp() { AimPressed = false; }
 
-    public void AimDown()
-    {
-        AimPressed = true;
-    }
-
-    public void AimUp()
-    {
-        AimPressed = false;
-    }
-
-    public void SprintDown()
-    {
-        SprintPressed = true;
-    }
-
-    public void SprintUp()
-    {
-        SprintPressed = false;
-    }
+    public void SprintDown() { SprintPressed = true; }
+    public void SprintUp() { SprintPressed = false; }
 }
