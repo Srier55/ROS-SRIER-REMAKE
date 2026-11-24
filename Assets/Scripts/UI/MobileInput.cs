@@ -1,9 +1,10 @@
 
+
 using UnityEngine;
 
 public class MobileInput : MonoBehaviour
 {
-    public static Vector2 MoveInput { get; private set; }
+    public static Vector2 MoveInput;
 
     public static bool FirePressed { get; private set; }
     public static bool AimPressed { get; private set; }
