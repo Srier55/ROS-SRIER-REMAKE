@@ -7,9 +7,11 @@ public class MobilePlayerMovement : MonoBehaviour
     public float moveSpeed = 5f;
     public float sprintSpeed = 8f;
     public float rotationSpeed = 12f;
+    public float gravity = -20f;
     public Transform cameraTransform;
 
     private CharacterController controller;
+    private Vector3 verticalVelocity;
 
     void Start()
     {
@@ -37,11 +39,13 @@ public class MobilePlayerMovement : MonoBehaviour
         Vector3 direction =
             forward * input.y + right * input.x;
 
+        direction = Vector3.ClampMagnitude(direction, 1f);
+
         float speed = MobileInput.SprintPressed
             ? sprintSpeed
             : moveSpeed;
 
-        if (direction.magnitude > 0.1f)
+        if (direction.sqrMagnitude > 0.01f)
         {
             transform.rotation = Quaternion.Slerp(
                 transform.rotation,
@@ -50,8 +54,14 @@ public class MobilePlayerMovement : MonoBehaviour
             );
         }
 
-        controller.Move(
-            direction * speed * Time.deltaTime
-        );
+        if (controller.isGrounded && verticalVelocity.y < 0f)
+            verticalVelocity.y = -2f;
+
+        verticalVelocity.y += gravity * Time.deltaTime;
+
+        Vector3 movement =
+            direction * speed + verticalVelocity;
+
+        controller.Move(movement * Time.deltaTime);
     }
 }
