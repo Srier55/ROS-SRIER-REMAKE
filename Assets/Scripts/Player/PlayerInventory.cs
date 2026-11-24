@@ -31,18 +31,14 @@ public class PlayerInventory : MonoBehaviour
         }
 
         if (items.Count >= maxSlots)
-        {
-            Debug.Log("Inventory is full!");
             return false;
-        }
 
-        InventorySlot newSlot = new InventorySlot();
-        newSlot.itemName = itemName;
-        newSlot.quantity = amount;
+        items.Add(new InventorySlot
+        {
+            itemName = itemName,
+            quantity = amount
+        });
 
-        items.Add(newSlot);
-
-        Debug.Log("Collected: " + itemName);
         return true;
     }
 
@@ -50,15 +46,17 @@ public class PlayerInventory : MonoBehaviour
     {
         if (amount <= 0) return false;
 
-        foreach (InventorySlot slot in items)
+        for (int i = 0; i < items.Count; i++)
         {
+            InventorySlot slot = items[i];
+
             if (slot.itemName == itemName &&
                 slot.quantity >= amount)
             {
                 slot.quantity -= amount;
 
                 if (slot.quantity == 0)
-                    items.Remove(slot);
+                    items.RemoveAt(i);
 
                 return true;
             }
